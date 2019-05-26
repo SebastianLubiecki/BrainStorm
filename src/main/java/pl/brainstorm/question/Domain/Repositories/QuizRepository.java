@@ -11,7 +11,7 @@ public interface QuizRepository extends JpaRepository<QuizEntity, Long> {
     @Query("select a.quizEntityList from AuthorEntity a where  a.id = ?1")
     List<QuizEntity> findAllByAuthorId(Long id);
 
-    @Query("Select q from QuizEntity q where q.numberOfSolved>0 order by q.numberOfSolved")
+    @Query("Select q from QuizEntity q where q.numberOfSolved>0 order by q.numberOfSolved desc ")
     List<QuizEntity> findAllOrderByNumberOfSolved();//chart
 
     List<QuizEntity> findAllBySizeOfQuestionListLessThanEqual(int size);

@@ -12,10 +12,13 @@ import java.util.List;
 public interface AuthorRepository extends JpaRepository<AuthorEntity, Long> {
 
     AuthorEntity findByEmail(String email);
-    @Query("select a from AuthorEntity a WHERE a.quizListSize < ?1")
-    List <AuthorEntity> findAllByQuizListSizeLessThanEqual(int sizeOfList);
-    @Query("select a from AuthorEntity a WHERE SIZE(a.quizEntityList) >= ?1")
-    List <AuthorEntity> findAllByQuizListSizeGreaterThanEqual(int sizeOfList);
+
+    List<AuthorEntity> findAllByQuizListSizeLessThanEqual(int sizeOfList);
+
+    List<AuthorEntity> findAllByQuizListSizeGreaterThanEqual(int sizeOfList);
+
     @Query("select a from AuthorEntity a WHERE a.quizListSize>0 order by a.quizListSize")
-    List <AuthorEntity> findAllByQuizEntityListOOrderByQuizListSize();
+    List<AuthorEntity> findAllByQuizEntityListOOrderByQuizListSize();
+
+    AuthorEntity deleteByEmail(String email);
 }

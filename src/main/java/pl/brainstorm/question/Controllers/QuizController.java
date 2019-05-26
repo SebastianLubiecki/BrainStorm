@@ -54,6 +54,18 @@ class QuizController {
         return new ResponseEntity<>(quiz, HttpStatus.OK);
     }
 
+    @GetMapping("/getRandomQuiz")
+    ResponseEntity getRandomQuiz() {
+        logger.info("Get random Quiz");
+        Quiz quiz = quizService.getRandomQuiz();
+//        if (quiz.getQuestionsList().size() == 0) {
+//            logger.warn("Sth go wrong. Check implementation of getRandomQuiz() or base is empty");
+//            getRandomQuiz();
+//        }
+        logger.info("Get quiz with name {}", quiz.getName());
+        return new ResponseEntity<>(quiz, HttpStatus.OK);
+    }
+
     @GetMapping("/listOfQuizzesWithQuestionsGreaterThen/{numberOfQuestions}")
     ResponseEntity getListOfQuizzesWithNumberOfQuestionsGreaterThen(@PathVariable int numberOfQuestions) {
         List<Quiz> quizList = quizService.getListOfQuizzesWithNumberOfQuestionsGreaterThen(numberOfQuestions);
@@ -133,7 +145,7 @@ class QuizController {
 
         Author author = authorService.getAuthorByEmail(email);
         author = authorService.addQuizToGivenAuthor(author, quiz);
-        authorService.editAuthor(author);
+        author = authorService.editAuthor(author);
         logger.info("Added quiz : {}", quiz);
         return new ResponseEntity<>(author, HttpStatus.OK);
     }
@@ -175,7 +187,5 @@ class QuizController {
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
-
-
 }
 

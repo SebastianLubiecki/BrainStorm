@@ -20,29 +20,28 @@ public class AnswerService {
         this.mappingService = mappingService;
     }
 
-    public Long addAnswer(Answer answer) {
+    Long addAnswer(Answer answer) {
         return answerRepository.save(mappingService.map(answer)).getId();
     }
 
-    public Boolean doesAnswerExist(Answer answer) {
+    Boolean doesAnswerExist(Answer answer) {
         AnswerEntity answerEntity = mappingService.map(answer);
         return answerRepository.existsById(answerEntity.getId());
     }
 
-    Long calculateTotalScoreInAnswer(AnswerEntity answer) {
+    Long calculateTotalScoreInAnswer(AnswerEntity answerEntity, Answer answer) {
         long temp = 0L;
-        if (answer.isaCorrect() && answer.getAnswerFromUser().equals("A")) {
+        if (answerEntity.isaCorrect() && answer.getAnswerFromUser().equals("A")) {
             temp += 1L;
-        } else if (answer.isbCorrect() && answer.getAnswerFromUser().equals("B")) {
+        } else if (answerEntity.isbCorrect() && answer.getAnswerFromUser().equals("B")) {
             temp += 1L;
-        } else if (answer.iscCorrect() && answer.getAnswerFromUser().equals("C")) {
+        } else if (answerEntity.iscCorrect() && answer.getAnswerFromUser().equals("C")) {
             temp += 1L;
-        } else if (answer.isdCorrect() && answer.getAnswerFromUser().equals("D")) {
+        } else if (answerEntity.isdCorrect() && answer.getAnswerFromUser().equals("D")) {
             temp += 1L;
         }
         return temp;
     }
-
 }
 
 

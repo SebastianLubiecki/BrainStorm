@@ -47,7 +47,7 @@ public class AuthorControllerTest {
     AuthorEntity authorEntity = new AuthorEntity();
 
     @Before
-    public void init(){
+    public void init() {
 
         AnswerEntity answerEntity = new AnswerEntity();
         answerEntity.setAnswerA("answerA");
@@ -110,8 +110,6 @@ public class AuthorControllerTest {
         quizEntityList.add(quizEntity);
         quizEntityList.add(quizEntity2);
 
-        System.out.println("QuizEntityListSize:" + quizEntityList.size());
-
         authorEntity.setName("Anett");
         authorEntity.setEmail("aw22@onet.pl");
         authorEntity.setSurname("Wrobel");
@@ -121,21 +119,7 @@ public class AuthorControllerTest {
 
         authorRepository.save(authorEntity);
 
-
     }
-
-    @Test
-    public void listOfAllAuthor() {
-
-        ResponseEntity<AuthorEntity[]> response = testRestTemplate.getForEntity(
-                "/author/listOfAll", AuthorEntity[].class
-        );
-        List<AuthorEntity> list = authorRepository.findAll();
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(list.get(0).getEmail(), "aw22@onet.pl");
-    }
-
 
     @Test
     public void getSingleAuthorByEmail() {
@@ -146,7 +130,7 @@ public class AuthorControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals(list.get(0).getName(), "Anett");
-        assertEquals(list.size(),1);
+        assertEquals(list.size(), 1);
     }
 
     @Test
@@ -180,18 +164,19 @@ public class AuthorControllerTest {
         quizList2.add(quiz);
 
 
-        Author author = new Author("Tom","Wrobel","aw23@onet.pl",quizList2,1);
+        Author author = new Author("Tom", "Wrobel", "aw23@onet.pl", quizList2, 1);
 
-            ResponseEntity<Author> response = testRestTemplate.postForEntity(
-                    "/author/add",
-                    author,
-                    Author.class
-            );
+        ResponseEntity<Author> response = testRestTemplate.postForEntity(
+                "/author/add",
+                author,
+                Author.class
+        );
 
-            assertEquals(HttpStatus.OK, response.getStatusCode());
-            assertNotNull(response.getBody());
-            assertEquals("Tom", author.getName());
-        }
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Tom", author.getName());
+        authorRepository.deleteByEmail(author.getEmail());
+    }
 
     @Test
     public void findAuthorsWithNumberOfQuizzesGreaterThen() {
@@ -201,7 +186,7 @@ public class AuthorControllerTest {
         );
         List<AuthorEntity> list = authorRepository.findAllByQuizListSizeGreaterThanEqual(2);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(list.get(0).getName(),"Anett");
+        assertEquals(list.get(0).getName(), "Anett");
     }
 
     @Test
@@ -212,7 +197,7 @@ public class AuthorControllerTest {
         );
         List<AuthorEntity> list = authorRepository.findAllByQuizListSizeLessThanEqual(3);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(list.get(0).getEmail(),"aw22@onet.pl");
+        assertEquals(list.get(0).getEmail(), "aw22@onet.pl");
 
     }
 
@@ -221,10 +206,10 @@ public class AuthorControllerTest {
 
         Map<String, Long> uriParams = new HashMap<>();
         uriParams.put("id", 1L);
-        testRestTemplate.delete("/author/removeAuthorById/{id}",uriParams);
+        testRestTemplate.delete("/author/removeAuthorById/{id}", uriParams);
 
         Optional removedAuthorEntity = authorRepository.findById(1L);
-        assertEquals(removedAuthorEntity,Optional.empty());
+        assertEquals(removedAuthorEntity, Optional.empty());
 
     }
 
@@ -252,7 +237,7 @@ public class AuthorControllerTest {
     }
 
     @After
-    public void finish(){
+    public void finish() {
         authorRepository.delete(authorEntity);
     }
 }

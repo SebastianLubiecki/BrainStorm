@@ -128,7 +128,8 @@ public class QuizService {
 
         Long tempToCalcScore = 0L;
         for (int i = 0; i < quiz.getQuestionsList().size(); i++) {
-            tempToCalcScore += questionService.calculateTotalScoreInQuestion(quizEntity.getQuestionsList().get(i));
+            tempToCalcScore += questionService.calculateTotalScoreInQuestion(quizEntity.getQuestionsList().get(i),
+                    quiz.getQuestionsList().get(i));
         }
         List<Long> listOfTotalScore = quizEntity.getTotalScore();
         listOfTotalScore.add(tempToCalcScore);
@@ -141,5 +142,15 @@ public class QuizService {
     public Boolean deleteQuiz(Quiz quiz) {
         quizRepository.delete(mappingService.map(quiz));
         return !isQuizInDataBase(quiz.getName());
+    }
+
+    public Quiz getRandomQuiz() {
+        List<Quiz> quizList = getListOfQuizzes();
+        int sizeOfList = quizList.size();
+        if (quizList.size() == 1) {
+            return quizList.get(0);
+        }
+        int numberOfQuiz = (int) (Math.random() * sizeOfList);
+        return quizList.get(numberOfQuiz);
     }
 }

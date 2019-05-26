@@ -13,7 +13,8 @@ public class Author {
     public Author() {
     }
 
-    public Author(String name, String surname, String email, List<Quiz> quizList, Integer quizListSize) {
+    public Author(String name, String surname, String email,
+                  List<Quiz> quizList, Integer quizListSize) {
         this.name = name;
         this.surname = surname;
         this.email = email;
