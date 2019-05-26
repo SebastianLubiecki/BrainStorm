@@ -6,6 +6,4 @@ Using technologies:
 Spring Boot, Spring Test, JUnit, Spring Data, MySQL, log4j. 
 
 Project is made by:
-https://github.com/SebastianLubiecki  
-https://github.com/KlaudiaHe 
-https://github.com/Aneta90.
+https://github.com/SebastianLubiecki, https://github.com/KlaudiaHe and https://github.com/Aneta90.
